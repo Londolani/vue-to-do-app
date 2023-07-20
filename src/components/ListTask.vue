@@ -1,10 +1,12 @@
 <template>
     <div class="card">
       <div class="card-header">
-        <p>{{ name }}</p>
+        <strike v-if="strike"><p>{{ name }}</p></strike>
+        <p v-if="!strike">{{ name }}</p>
         <div class="buttons">
-          <button class="edit-button" @click="editTask(id)">Edit</button>
-          <button class="remove-button" @click="removeTask(id)">Remove</button>
+            <button class="done-button" @click="done"> {{ strike ? 'undo':'done'}}</button>
+            <button class="edit-button" @click="editTask(id)">Edit</button>
+            <button class="remove-button" @click="removeTask(id)">Remove</button>
         </div>
       </div>
     </div>
@@ -13,6 +15,12 @@
   <script>
   export default {
     props: ['name', 'id'],
+    data(){
+        return{
+            strike:false,
+            doneButton: 'Done'
+        }
+    },
     methods: {
       editTask(id) {
         this.$emit('editTask', id);
@@ -20,6 +28,10 @@
       removeTask(id) {
         this.$emit('removeTask', id);
       },
+      done(){
+        this.strike = !this.strike;
+        this.button = 'undo'
+      }
     },
   };
   </script>
@@ -30,14 +42,14 @@
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 10px;
-    border-color:#4CAF50;
+    border-color: #4CAF50;
   }
-  
+
   .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
   
   p {
     font-size: 18px;
@@ -64,9 +76,13 @@
   }
   
   .remove-button {
-    background-color: black;
+    background-color: red;
     color: #fff;
   }
   
+  .done-button {
+    background-color: black;
+    color: #fff;
+  }
   </style>
   

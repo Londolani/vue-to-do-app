@@ -36,13 +36,12 @@ export default {
     },
     removeTask(taskId){
       this.taskList = this.taskList.filter((task)=> task.id !== taskId)
+    },
+    editTask(taskId, newName){
+      const updateTask = this.taskList.find((task)=> task.id === taskId)
+      updateTask.name = newName;
     }
-  },
-  provide(){
-    return{
-      removeTask: this.taskList.id
-    };
-  },
+  }
 }
 </script>
 
