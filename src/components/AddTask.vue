@@ -6,7 +6,7 @@
         <button type="submit">Add Task</button>
       </form>
     </div>
-  </template>
+</template>
   
   <script>
   export default {
@@ -17,14 +17,16 @@
     },
     methods: {
       submitData() {
-        this.$emit('inputValue', this.input);
+        if(this.input.trim !==''){
+            this.$emit('inputValue', this.input);
+        }
         this.input = '';
       }
     }
   }
   </script>
   
-  <style scoped>
+  <style>
   .task-form {
     display: flex;
     flex-direction: row;

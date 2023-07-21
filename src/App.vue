@@ -2,7 +2,7 @@
   <div>
     <h2>To do List</h2>
     <add-task @inputValue="addTask"></add-task>
-    <list-task v-for="task in taskList" :key="task.id" :name="task.name" @removeTask="removeTask(task.id)"></list-task>
+    <list-task v-for="task in taskList" :key="task.id" :name="task.name" @removeTask="removeTask(task.id)" @updatedValues="editTask(task.id)" @newName="editTask"></list-task>
   </div>
 </template>
 
@@ -37,9 +37,13 @@ export default {
     removeTask(taskId){
       this.taskList = this.taskList.filter((task)=> task.id !== taskId)
     },
-    editTask(taskId, newName){
-      const updateTask = this.taskList.find((task)=> task.id === taskId)
-      updateTask.name = newName;
+    editTask({taskId, newName}){
+      const taskToUpdate = this.taskList.find((task) => task.id === taskId);
+      if (taskToUpdate) {
+        taskToUpdate.name = newName;
+      }
+      //const updateTask = this.taskList.find((task)=> task.id === taskId)
+      //updateTask.name = newName;
     }
   }
 }

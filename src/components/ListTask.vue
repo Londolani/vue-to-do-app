@@ -1,14 +1,20 @@
 <template>
+    <div>
     <div class="card">
       <div class="card-header">
         <strike v-if="strike"><p>{{ name }}</p></strike>
         <p v-if="!strike">{{ name }}</p>
         <div class="buttons">
-            <button class="done-button" @click="done"> {{ strike ? 'undo':'done'}}</button>
-            <button class="edit-button" @click="editTask(id)">Edit</button>
+            <button class="done-button" @click="updateStatus"> {{ strike ? 'Undo':'Done'}}</button>
+            <button class="edit-button" @click="showForm">Edit</button>
             <button class="remove-button" @click="removeTask(id)">Remove</button>
         </div>
       </div>
+    </div>
+    <form v-if="edit" class="task-form" @submit.prevent="editTask">
+        <input name="task" type="text" v-model="input">
+        <button  type="submit">Update Task</button>
+    </form>
     </div>
   </template>
   
@@ -18,19 +24,24 @@
     data(){
         return{
             strike:false,
-            doneButton: 'Done'
+            input: this.name,
+            edit:false
         }
     },
     methods: {
-      editTask(id) {
-        this.$emit('editTask', id);
+      editTask() {
+        //this.input = this.name;
+        this.$emit('updatedValues',{ id:this.id,name:this.input});
+        this.edit = !this.edit;
       },
       removeTask(id) {
         this.$emit('removeTask', id);
       },
-      done(){
+      updateStatus(){
         this.strike = !this.strike;
-        this.button = 'undo'
+      },
+      showForm(){
+        this.edit = !this.edit;
       }
     },
   };
@@ -83,6 +94,13 @@
   .done-button {
     background-color: black;
     color: #fff;
+  }
+  .task-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
   }
   </style>
   
