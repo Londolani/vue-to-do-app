@@ -31,8 +31,13 @@
     methods: {
       editTask() {
         //this.input = this.name;
-        this.$emit('updatedValues',{ id:this.id,name:this.input});
+        this.$emit('newId',this.taskId);
         this.edit = !this.edit;
+        this.newInput();
+        this.input='';
+      },
+      newInput(){
+        this.$emit('newInput', this.input);
       },
       removeTask(id) {
         this.$emit('removeTask', id);

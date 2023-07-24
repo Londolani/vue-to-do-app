@@ -17,7 +17,7 @@
     },
     methods: {
       submitData() {
-        if(this.input.trim !==''){
+        if(this.input.trim() !==''){
             this.$emit('inputValue', this.input);
         }
         this.input = '';
